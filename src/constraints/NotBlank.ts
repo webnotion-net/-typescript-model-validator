@@ -2,7 +2,6 @@ import ConstraintInterface from "./ConstraintInterface";
 
 class NotBlank implements ConstraintInterface {
     validate(data: string|number): boolean {
-        console.log(data);
         if (typeof data === 'undefined') {
             return false;
         }

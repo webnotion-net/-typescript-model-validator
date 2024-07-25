@@ -44,8 +44,8 @@ Implement the ValidatableModelInterface in your data model class.
 #### Example: User Model
 
 ```typescript
-import ValidatableModelInterface from "@/libs/persokit-app-base/validator/models/ValidatableModelInterface";
-import NotBlank from "@/libs/persokit-app-base/validator/constraints/NotBlank";
+import {ConstraintInterface, ValidatableModelInterface} from "@webnotion_/typescript-model-validator";
+import NotBlank from "@webnotion_/typescript-model-validator/dist/constraints/NotBlank";
 
 class User implements ValidatableModelInterface {
     name: string;
@@ -76,8 +76,8 @@ Use the `Validator` class to validate your models and properties.
 #### Example: Validating a Model
 
 ```typescript
-import Validator from "@/libs/persokit-app-base/validator/Validator";
-import IncomeTransaction from "@/models/IncomeTransaction";
+import {Validator} from "@webnotion_/typescript-model-validator";
+import User from "@/models/User";
 
 const user = new User();
 user.name = '';  // Invalid data
@@ -92,8 +92,8 @@ const violations = validator.validate(user);
 #### Example: Validating a Property
 
 ```typescript
-import Validator from "@/libs/persokit-app-base/validator/Validator";
-import NotBlank from "@/libs/persokit-app-base/validator/constraints/NotBlank";
+import {Validator} from "@webnotion_/typescript-model-validator";
+import NotBlank from "@webnotion_/typescript-model-validator/dist/constraints/NotBlank";
 
 const name = '';
 const validator = new Validator();
@@ -108,7 +108,7 @@ You can create custom constraints by implementing the ConstraintInterface.
 #### Example: Custom Constraint
 
 ```typescript
-import ConstraintInterface from "@/libs/persokit-app-base/validator/constraints/ConstraintInterface";
+import {ConstraintInterface} from "@webnotion_/typescript-model-validator";
 
 class IsPositive implements ConstraintInterface {
     validate(data: number): boolean {

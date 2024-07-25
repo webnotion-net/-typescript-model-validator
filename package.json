@@ -1,0 +1,41 @@
+{
+  "name": "@webnotion_/typescript-model-validator",
+  "version": "1.0.0",
+  "description": "Flexible and extensible library for validating data models in TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webnotion-net/typescript-model-validator.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "typescript",
+    "data-validator",
+    "model-validator",
+    "webnotion",
+    "validator"
+  ],
+  "author": "Dainius Šležas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webnotion-net/typescript-model-validator/issues"
+  },
+  "homepage": "https://github.com/webnotion-net/typescript-model-validator#readme",
+  "dependencies": {
+    "tslib": "^2.6.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "typescript": "^5.5.4"
+  }
+}
