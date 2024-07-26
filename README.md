@@ -44,8 +44,8 @@ Implement the ValidatableModelInterface in your data model class.
 #### Example: User Model
 
 ```typescript
-import {ConstraintInterface, ValidatableModelInterface} from "@webnotion_/typescript-model-validator";
-import NotBlank from "@webnotion_/typescript-model-validator/dist/constraints/NotBlank";
+import {ConstraintInterface, ValidatableModelInterface} from "@webnotion-net/typescript-model-validator";
+import NotBlank from "@webnotion-net/typescript-model-validator/dist/constraints/NotBlank";
 
 class User implements ValidatableModelInterface {
     name: string;
@@ -76,7 +76,7 @@ Use the `Validator` class to validate your models and properties.
 #### Example: Validating a Model
 
 ```typescript
-import {Validator} from "@webnotion_/typescript-model-validator";
+import {Validator} from "@webnotion-net/typescript-model-validator";
 import User from "@/models/User";
 
 const user = new User();
@@ -92,8 +92,8 @@ const violations = validator.validate(user);
 #### Example: Validating a Property
 
 ```typescript
-import {Validator} from "@webnotion_/typescript-model-validator";
-import NotBlank from "@webnotion_/typescript-model-validator/dist/constraints/NotBlank";
+import {Validator} from "@webnotion-net/typescript-model-validator";
+import NotBlank from "@webnotion-net/typescript-model-validator/dist/constraints/NotBlank";
 
 const name = '';
 const validator = new Validator();
@@ -108,7 +108,7 @@ You can create custom constraints by implementing the ConstraintInterface.
 #### Example: Custom Constraint
 
 ```typescript
-import {ConstraintInterface} from "@webnotion_/typescript-model-validator";
+import {ConstraintInterface} from "@webnotion-net/typescript-model-validator";
 
 class IsPositive implements ConstraintInterface {
     validate(data: number): boolean {

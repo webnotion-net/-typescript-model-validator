@@ -1,9 +1,10 @@
 import ValidatableModelInterface from "./models/ValidatableModelInterface";
-import Violation from "./violations/Violation";
+import Violations from "./violations/Violations";
 import ConstraintInterface from "./constraints/ConstraintInterface";
+import Violation from "./violations/Violation";
 
 class Validator {
-    validate(data: ValidatableModelInterface): Violation[] {
+    validate(data: ValidatableModelInterface): Violations {
         const violations: Violation[] = [];
 
         for (const [propertyName, constraints] of Object.entries(data.getConstraints())) {
@@ -18,14 +19,14 @@ class Validator {
             }
         }
 
-        return violations;
+        return new Violations(violations);
     }
 
     validateProperty(
         propertyName: string,
         data: string | number | object,
         constraints: ConstraintInterface[]
-    ): Violation[] {
+    ): Violations {
         const violations: Violation[] = [];
 
         constraints.forEach((constraint: ConstraintInterface) => {
@@ -39,7 +40,7 @@ class Validator {
             }
         });
 
-        return violations;
+        return new Violations(violations);
     }
 }
 
