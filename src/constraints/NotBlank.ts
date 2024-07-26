@@ -14,11 +14,7 @@ class NotBlank implements ConstraintInterface {
             return false;
         }
 
-        if (typeof data === 'string' && data.length === 0) {
-            return false;
-        }
-
-        return true;
+        return !(typeof data === 'string' && data.length === 0);
     }
 
     getErrorMessage(): string {

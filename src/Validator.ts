@@ -3,18 +3,22 @@ import Violation from "./violations/Violation";
 import ConstraintInterface from "./constraints/ConstraintInterface";
 
 class Validator {
-    validate(data: ValidatableModelInterface): Violation[] {
-        const violations: Violation[] = [];
+    validate(data: ValidatableModelInterface): { [property: string]: Violation[] } {
+        const violations: { [property: string]: Violation[] } = {};
 
         for (const [propertyName, constraints] of Object.entries(data.getConstraints())) {
+            const propertyViolations: Violation[] = [];
             for (const constraint of constraints) {
                 if (!constraint.validate((data as any)[propertyName])) {
                     const violation = new Violation(
-                        propertyName,
                         constraint.getErrorMessage()
                     );
-                    violations.push(violation);
+                    propertyViolations.push(violation);
                 }
+            }
+
+            if (propertyViolations.length > 0) {
+                violations[propertyName] = propertyViolations;
             }
         }
 
@@ -32,7 +36,6 @@ class Validator {
             // @ts-ignore
             if (!constraint.validate(data)) {
                 const violation = new Violation(
-                    propertyName,
                     constraint.getErrorMessage()
                 );
                 violations.push(violation);

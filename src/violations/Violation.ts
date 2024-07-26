@@ -1,9 +1,7 @@
 class Violation {
-    readonly propertyName: string;
     readonly message: string;
 
-    public constructor(propertyName : string, message: string) {
-        this.propertyName = propertyName;
+    public constructor(message: string) {
         this.message = message;
     }
 }
