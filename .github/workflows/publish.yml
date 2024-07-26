@@ -31,4 +31,4 @@ jobs:
                 run: echo "TAG_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
             -   name: Publish package
-                run: npm publish --access public --tag ${{ env.TAG_VERSION }}
+                run: npm publish --access public
