@@ -1,5 +1,5 @@
 interface ConstraintInterface {
-    validate(data: string|number): boolean;
+    validate(data: string | number): boolean;
     getErrorMessage(): string;
 }
 

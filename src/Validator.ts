@@ -1,17 +1,32 @@
 import ValidatableModelInterface from "./models/ValidatableModelInterface";
 import Violations from "./violations/Violations";
-import ConstraintInterface from "./constraints/ConstraintInterface";
 import Violation from "./violations/Violation";
+import GloballyValidatableModelInterface from "./models/GloballyValidatableModelInterface";
+import ConstraintInterface from "./constraints/ConstraintInterface";
 
 class Validator {
-    validate(data: ValidatableModelInterface): Violations {
+    validate(data: ValidatableModelInterface | GloballyValidatableModelInterface): Violations {
         const violations: Violation[] = [];
 
-        for (const [propertyName, constraints] of Object.entries(data.getConstraints())) {
-            for (const constraint of constraints) {
-                if (!constraint.validate((data as any)[propertyName])) {
+        if (this.isValidatableModel(data)) {
+            for (const [propertyName, constraints] of Object.entries(data?.getConstraints())) {
+                for (const constraint of constraints) {
+                    if (!constraint.validate((data as any)[propertyName])) {
+                        const violation = new Violation(
+                            propertyName,
+                            constraint.getErrorMessage()
+                        );
+                        violations.push(violation);
+                    }
+                }
+            }
+        }
+
+        if (this.isGloballyValidatableModel(data)) {
+            for (const [key, constraint] of Object.entries(data?.getGlobalConstraints())) {
+                if (!constraint.validate(data)) {
                     const violation = new Violation(
-                        propertyName,
+                        null,
                         constraint.getErrorMessage()
                     );
                     violations.push(violation);
@@ -24,13 +39,12 @@ class Validator {
 
     validateProperty(
         propertyName: string,
-        data: string | number | object,
+        data: string | number,
         constraints: ConstraintInterface[]
     ): Violations {
         const violations: Violation[] = [];
 
         constraints.forEach((constraint: ConstraintInterface) => {
-            // @ts-ignore
             if (!constraint.validate(data)) {
                 const violation = new Violation(
                     propertyName,
@@ -41,6 +55,18 @@ class Validator {
         });
 
         return new Violations(violations);
+    }
+
+    private isValidatableModel(
+        data: ValidatableModelInterface | GloballyValidatableModelInterface
+    ): data is ValidatableModelInterface {
+        return (data as ValidatableModelInterface).getConstraints !== undefined;
+    }
+
+    private isGloballyValidatableModel(
+        data: ValidatableModelInterface | GloballyValidatableModelInterface
+    ): data is GloballyValidatableModelInterface {
+        return (data as GloballyValidatableModelInterface).getGlobalConstraints !== undefined;
     }
 }
 

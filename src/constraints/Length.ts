@@ -3,9 +3,9 @@ import ConstraintInterface from "./ConstraintInterface";
 class Length implements ConstraintInterface
 {
     min: number;
-    max?: number;
+    max: number;
 
-    public constructor(min: number, max?: number) {
+    public constructor(min: number, max: number) {
         this.min = min;
         this.max = max;
     }
@@ -15,15 +15,7 @@ class Length implements ConstraintInterface
             return false;
         }
 
-        if (data.length < this.min) {
-            return false;
-        }
-
-        if (this.max && data.length > this.max) {
-            return false;
-        }
-
-        return true;
+        return data.length > this.min && data.length < this.max;
     }
 
     getErrorMessage(): string {
