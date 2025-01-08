@@ -37,6 +37,24 @@ class Validator {
         return new Violations(violations);
     }
 
+    validatePlain(data: object, constraints: { [key: string]: ConstraintInterface[] }): Violations {
+        const violations: Violation[] = [];
+
+        for (const [propertyName, propertyConstraints] of Object.entries(constraints)) {
+            for (const constraint of propertyConstraints) {
+                if (!constraint.validate((data as any)[propertyName])) {
+                    const violation = new Violation(
+                        propertyName,
+                        constraint.getErrorMessage()
+                    );
+                    violations.push(violation);
+                }
+            }
+        }
+
+        return new Violations(violations);
+    }
+
     validateProperty(
         propertyName: string,
         data: string | number,
